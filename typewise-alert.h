@@ -22,11 +22,9 @@ typedef enum {
 typedef struct {
 	CoolingType coolingType;
 	char brand[48];
-	std::string s;
 } BatteryCharacter;
 
-class NotificationTo
-{
+class NotificationTo{
 public:
 	virtual void sendToController(BreachType breachType) = 0;
 	virtual void sendToEmail(BreachType breachType) = 0;
@@ -36,12 +34,11 @@ class InterfaceFor :public NotificationTo {
 public:
 	void sendToController(BreachType breachType);
 	void sendToEmail(BreachType breachType);
-	std::map<BreachType, std::string> email_type = { { TOO_HIGH , "  the temperature is too high"},
-													 { TOO_LOW  , " the temperature is too low"  },
-													 { NORMAL   , " the temperature is too low"  }
-													};
+	std::map<BreachType, std::string> email_contain = { { TOO_HIGH , "  the temperature is too high" },
+														{ TOO_LOW  , "  the temperature is too low"  },
+														{ NORMAL   , "  the temperature is normal"   }
+													   };
 };
-
 class Maintenance_and_Support {
 public:
 	std::map<CoolingType, std::pair<double, double>> check_cooling = { { PASSIVE_COOLING    ,std::make_pair(0,35) },

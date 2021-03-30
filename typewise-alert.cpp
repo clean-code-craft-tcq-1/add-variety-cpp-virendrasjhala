@@ -39,6 +39,6 @@ void InterfaceFor::sendToEmail(BreachType breachType) {
 	const char* recepient = "a.b@c.com";
 	printf("To: %s\n", recepient);
 	printf("Hi");
-	std::cout << email_type[breachType].data()<<"\n";
+	std::cout << email_contain[breachType].data()<<"\n";
 
 }
