@@ -12,23 +12,8 @@ BreachType Maintenance_and_Support::inferBreach(double value, double lowerLimit,
 }
 
 BreachType Maintenance_and_Support::classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
-	int lowerLimit = 0;
-	int upperLimit = 0;
-	switch (coolingType) {
-	case PASSIVE_COOLING:
-		lowerLimit = 0;
-		upperLimit = 35;
-		break;
-	case HI_ACTIVE_COOLING:
-		lowerLimit = 0;
-		upperLimit = 45;
-		break;
-	case MED_ACTIVE_COOLING:
-		lowerLimit = 0;
-		upperLimit = 40;
-		break;
-	}
-	return inferBreach(temperatureInC, lowerLimit, upperLimit);
+
+	return inferBreach(temperatureInC, check_cooling[coolingType].first, check_cooling[coolingType].second);
 }
 
 void Maintenance_and_Support::checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
@@ -52,16 +37,8 @@ void InterfaceFor::sendToController(BreachType breachType) {
 
 void InterfaceFor::sendToEmail(BreachType breachType) {
 	const char* recepient = "a.b@c.com";
-	switch (breachType) {
-	case TOO_LOW:
-		printf("To: %s\n", recepient);
-		printf("Hi, the temperature is too low\n");
-		break;
-	case TOO_HIGH:
-		printf("To: %s\n", recepient);
-		printf("Hi, the temperature is too high\n");
-		break;
-	case NORMAL:
-		break;
-	}
+	printf("To: %s\n", recepient);
+	printf("Hi");
+	std::cout << email_type[breachType].data()<<"\n";
+
 }

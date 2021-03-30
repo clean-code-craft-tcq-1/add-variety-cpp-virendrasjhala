@@ -10,7 +10,7 @@ TEST_CASE("infers the breach according to limits") {
 	Maintenance_and_Support check_alert;
 	BatteryCharacter batteryChar1;
 	batteryChar1.coolingType = PASSIVE_COOLING;
-	check_alert.checkAndAlert(TO_EMAIL, batteryChar1, 25.5);
+	check_alert.checkAndAlert(TO_EMAIL, batteryChar1, 90);
 	//system("pause");
 	
 }

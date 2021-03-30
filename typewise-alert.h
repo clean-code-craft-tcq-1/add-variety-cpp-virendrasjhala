@@ -36,11 +36,18 @@ class InterfaceFor :public NotificationTo {
 public:
 	void sendToController(BreachType breachType);
 	void sendToEmail(BreachType breachType);
+	std::map<BreachType, std::string> email_type = { { TOO_HIGH , "  the temperature is too high"},
+													 { TOO_LOW  , " the temperature is too low"  },
+													 { NORMAL   , " the temperature is too low"  }
+													};
 };
 
 class Maintenance_and_Support {
 public:
-	std::map<CoolingType, std::pair<double, double>> m;
+	std::map<CoolingType, std::pair<double, double>> check_cooling = { { PASSIVE_COOLING    ,std::make_pair(0,35) },
+																	   { HI_ACTIVE_COOLING  ,std::make_pair(0,45) },
+																	   { MED_ACTIVE_COOLING ,std::make_pair(0,40) }
+																	  };
 	BreachType inferBreach(double value, double lowerLimit, double upperLimit);
 	BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
 	void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
