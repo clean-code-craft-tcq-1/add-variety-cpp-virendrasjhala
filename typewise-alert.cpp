@@ -1,6 +1,7 @@
 #include "typewise-alert.h"
 #include <stdio.h>
 
+
 BreachType Maintenance_and_Support::inferBreach(double value, double lowerLimit, double upperLimit) {
 	if (value < lowerLimit) {
 		return TOO_LOW;
@@ -25,7 +26,7 @@ void Maintenance_and_Support::checkAndAlert(AlertTarget alertTarget, BatteryChar
 		controller_notifier.sendToController(breachType);
 		break;
 	case TO_EMAIL:
-		email_notifier.sendToEmail(breachType);
+		email_notifier.sendToEmail(breachType, batteryChar.coolingType);
 		break;
 	}
 }
@@ -35,10 +36,10 @@ void InterfaceFor::sendToController(BreachType breachType) {
 	printf("%x : %x\n", header, breachType);
 }
 
-void InterfaceFor::sendToEmail(BreachType breachType) {
+void InterfaceFor::sendToEmail(BreachType breachType, CoolingType coolingType) {
 	const char* recepient = "a.b@c.com";
 	printf("To: %s\n", recepient);
-	printf("Hi");
-	std::cout << email_contain[breachType].data()<<"\n";
+	printf("Hi\n");
+	std::cout << m[coolingType].data()<<" : "<<email_contain[breachType].data() << "\n";
 
 }

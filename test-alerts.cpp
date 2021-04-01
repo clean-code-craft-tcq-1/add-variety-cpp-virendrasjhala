@@ -9,7 +9,7 @@ TEST_CASE("infers the breach according to limits") {
 	REQUIRE(check_breach.inferBreach(12, 20, 30) == TOO_LOW);
 	Maintenance_and_Support check_alert;
 	BatteryCharacter batteryChar1;
-	batteryChar1.coolingType = PASSIVE_COOLING;
+	batteryChar1.coolingType = PASSIVE_COOLING_AIR_PRESSURE;
 	check_alert.checkAndAlert(TO_EMAIL, batteryChar1, 90);
 	//system("pause");
 	
