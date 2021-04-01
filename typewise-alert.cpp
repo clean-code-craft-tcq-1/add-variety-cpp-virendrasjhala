@@ -12,14 +12,14 @@ BreachType Maintenance_and_Support::inferBreach(double value, double lowerLimit,
 	return NORMAL;
 }
 
-BreachType Maintenance_and_Support::classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
+BreachType Maintenance_and_Support::classifyTemperatureAndPressureBreach(CoolingType coolingType, double temperatureInC) {
 
 	return inferBreach(temperatureInC, check_cooling[coolingType].first, check_cooling[coolingType].second);
 }
 
 void Maintenance_and_Support::checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
-	BreachType breachType = Maintenance_and_Support::classifyTemperatureBreach( batteryChar.coolingType, temperatureInC);
+	BreachType breachType = Maintenance_and_Support::classifyTemperatureAndPressureBreach( batteryChar.coolingType, temperatureInC);
 	InterfaceFor controller_notifier, email_notifier;
 	switch (alertTarget) {
 	case TO_CONTROLLER:

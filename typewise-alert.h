@@ -41,7 +41,7 @@ class InterfaceFor :public NotificationTo {
 public:
 	std::map<CoolingType, std::string> m = { { PASSIVE_COOLING             ,"PASSIVE_COOLING" },
 											{ PASSIVE_COOLING_TEMP         ,"PASSIVE_COOLING_TEMP" },
-											{ PASSIVE_COOLING_AIR_PRESSURE ,"PASSIVE_COOLING_TEMP"},
+											{ PASSIVE_COOLING_AIR_PRESSURE ,"PASSIVE_COOLING_AIR_PRESSURE"},
 											{ HI_ACTIVE_COOLING            ,"HI_ACTIVE_COOLING" },
 											{ HI_ACTIVE_COOLING_TEMP       ,"HI_ACTIVE_COOLING_TEMP" },
 											{ HI_ACTIVE_COOLING_AIR_PRESSURE,"HI_ACTIVE_COOLING_AIR_PRESSURE" },
@@ -72,7 +72,7 @@ public:
 																		{ MED_ACTIVE_COOLING_AIR_PRESSURE,std::make_pair(8,60)}
 																	  };
 	BreachType inferBreach(double value, double lowerLimit, double upperLimit);
-	BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
+	BreachType classifyTemperatureAndPressureBreach(CoolingType coolingType, double temperatureInC);
 	void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 
 };
