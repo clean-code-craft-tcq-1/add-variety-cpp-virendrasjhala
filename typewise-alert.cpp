@@ -17,29 +17,33 @@ BreachType Maintenance_and_Support::classifyTemperatureAndPressureBreach(Cooling
 	return inferBreach(temperatureInC, check_cooling[coolingType].first, check_cooling[coolingType].second);
 }
 
-void Maintenance_and_Support::checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
+BreachType Maintenance_and_Support::checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
 	BreachType breachType = Maintenance_and_Support::classifyTemperatureAndPressureBreach( batteryChar.coolingType, temperatureInC);
 	InterfaceFor controller_notifier, email_notifier;
 	switch (alertTarget) {
 	case TO_CONTROLLER:
-		controller_notifier.sendToController(breachType);
+		return controller_notifier.sendToController(breachType);
 		break;
 	case TO_EMAIL:
-		email_notifier.sendToEmail(breachType, batteryChar.coolingType);
+		return email_notifier.sendToEmail(breachType, batteryChar.coolingType);
 		break;
 	}
+	return UNWANTED_ERROR;
 }
 
-void InterfaceFor::sendToController(BreachType breachType) {
+BreachType InterfaceFor::sendToController(BreachType breachType) {
 	const unsigned short header = 0xfeed;
 	printf("%x : %x\n", header, breachType);
+
+	return breachType;
 }
 
-void InterfaceFor::sendToEmail(BreachType breachType, CoolingType coolingType) {
+BreachType InterfaceFor::sendToEmail(BreachType breachType, CoolingType coolingType) {
 	const char* recepient = "a.b@c.com";
 	printf("To: %s\n", recepient);
-	printf("Hi\n");
-	std::cout << m[coolingType].data()<<" : "<<email_contain[breachType].data() << "\n";
+	std::cout<<"Hi"<<"\n";
+	std::cout << m[coolingType].data()<<":"<<email_contain[breachType].data() << "\n\n";
 
+	return breachType;
 }

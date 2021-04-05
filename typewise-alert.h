@@ -18,7 +18,8 @@ typedef enum {
 typedef enum {
 	NORMAL,
 	TOO_LOW,
-	TOO_HIGH
+	TOO_HIGH,
+	UNWANTED_ERROR
 } BreachType;
 
 typedef enum {
@@ -33,8 +34,8 @@ typedef struct {
 
 class NotificationTo{
 public:
-	virtual void sendToController(BreachType breachType) = 0;
-	virtual void sendToEmail(BreachType breachType, CoolingType coolingType) = 0;
+	virtual BreachType sendToController(BreachType breachType) = 0;
+	virtual BreachType sendToEmail(BreachType breachType, CoolingType coolingType) = 0;
 };
 
 class InterfaceFor :public NotificationTo {
@@ -52,11 +53,11 @@ public:
 	
 
 
-	void sendToController(BreachType breachType);
-	void sendToEmail(BreachType breachType, CoolingType coolingType);
-	std::map<BreachType, std::string> email_contain = { { TOO_HIGH , "  IS TOO HIGH" },
-														{ TOO_LOW  , "  IS TOO LOW"  },
-														{ NORMAL   , "  IS NORMAL"   }
+	BreachType sendToController(BreachType breachType);
+	BreachType sendToEmail(BreachType breachType, CoolingType coolingType);
+	std::map<BreachType, std::string> email_contain = { { TOO_HIGH , " TOO HIGH" },
+														{ TOO_LOW  , " TOO LOW"  },
+														{ NORMAL   , " NORMAL"   }
 													   };
 };
 class Maintenance_and_Support {
@@ -73,6 +74,6 @@ public:
 																	  };
 	BreachType inferBreach(double value, double lowerLimit, double upperLimit);
 	BreachType classifyTemperatureAndPressureBreach(CoolingType coolingType, double temperatureInC);
-	void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
+	BreachType checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 
 };
