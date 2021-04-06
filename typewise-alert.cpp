@@ -28,7 +28,9 @@ BreachType Maintenance_and_Support::checkAndAlert(AlertTarget alertTarget, Batte
 	case TO_EMAIL:
 		return email_notifier.sendToEmail(breachType, batteryChar.coolingType);
 		break;
+	default: std::cout<<"UNWANTED_ERROR :"<< UNWANTED_ERROR<<"\n";
 	}
+
 	return UNWANTED_ERROR;
 }
 

@@ -24,7 +24,8 @@ typedef enum {
 
 typedef enum {
 	TO_CONTROLLER,
-	TO_EMAIL
+	TO_EMAIL,
+	NO_Target
 } AlertTarget;
 
 typedef struct {
@@ -59,7 +60,7 @@ public:
 };
 class Maintenance_and_Support {
 public:
-	std::map<CoolingType, std::pair<double, double>> check_cooling = {	{ PASSIVE_COOLING              ,std::make_pair(0,35)  },
+	std::map<CoolingType, std::pair<double, double>> check_cooling = {	{ PASSIVE_COOLING              ,std::make_pair(5,35)  },
 																		{ PASSIVE_COOLING_TEMP         ,std::make_pair(10,25) },
 																		{ PASSIVE_COOLING_AIR_PRESSURE ,std::make_pair(5,30)  },
 																		{ HI_ACTIVE_COOLING            ,std::make_pair(0,45)  },
