@@ -21,8 +21,7 @@ TEST_CASE("infers the breach according to limits") {
 	Maintenance_and_Support MID_AC_Breach;
 	BatteryCharacter mid_cooling;
 	mid_cooling.coolingType = MED_ACTIVE_COOLING_TEMP;
-	REQUIRE(MID_AC_Breach.checkAndAlert(TO_CONTROLLER, mid_cooling, 30) == NORMAL);
-	
+	REQUIRE(MID_AC_Breach.checkAndAlert(TO_CONTROLLER, mid_cooling, 30) == NORMAL);	
 }
 
 	
