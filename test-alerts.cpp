@@ -17,11 +17,13 @@ TEST_CASE("infers the breach according to limits") {
 	active_cooling.coolingType = HI_ACTIVE_COOLING_AIR_PRESSURE;
 	REQUIRE(HI_AC_Breach.checkAndAlert(TO_EMAIL, active_cooling, 20) == NORMAL);
 	
-	
-	Maintenance_and_Support MID_AC_Breach;
-	BatteryCharacter mid_cooling;
-	mid_cooling.coolingType = MED_ACTIVE_COOLING_TEMP;
-	REQUIRE(MID_AC_Breach.checkAndAlert(TO_CONTROLLER, mid_cooling, 30) == NORMAL);	
-}
+	Maintenance_and_Support MID_AC_Breach1;
+	BatteryCharacter mid_cooling1;
+	mid_cooling1.coolingType = MED_ACTIVE_COOLING_TEMP;
+	REQUIRE(MID_AC_Breach1.checkAndAlert(TO_CONTROLLER, mid_cooling1, 30) == NORMAL);
 
-	
+	Maintenance_and_Support MID_AC_Breach2;
+	BatteryCharacter mid_cooling2;
+	mid_cooling2.coolingType = MED_ACTIVE_COOLING_AIR_PRESSURE;
+	REQUIRE(MID_AC_Breach2.checkAndAlert(TO_CONTROLLER, mid_cooling2, 40) == NORMAL);
+}
