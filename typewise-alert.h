@@ -50,9 +50,6 @@ public:
 											{ MED_ACTIVE_COOLING_TEMP      ,"MED_ACTIVE_COOLING_TEMP" },
 											{ MED_ACTIVE_COOLING_AIR_PRESSURE,"MED_ACTIVE_COOLING_AIR_PRESSURE" }
 											};
-	
-
-
 	BreachType sendToController(BreachType breachType);
 	BreachType sendToEmail(BreachType breachType, CoolingType coolingType);
 	std::map<BreachType, std::string> email_contain = { { TOO_HIGH , " TOO HIGH" },
