@@ -58,7 +58,7 @@ public:
 														{ NORMAL   , " NORMAL"   }
 													   };
 };
-class Maintenance_and_Support {
+class Maintenance {
 public:
 	std::map<CoolingType, std::pair<double, double>> check_cooling = {	{ PASSIVE_COOLING              ,std::make_pair(5,35)  },
 																		{ PASSIVE_COOLING_TEMP         ,std::make_pair(10,25) },
@@ -71,7 +71,7 @@ public:
 																		{ MED_ACTIVE_COOLING_AIR_PRESSURE,std::make_pair(8,60)}
 																	  };
 	BreachType inferBreach(double value, double lowerLimit, double upperLimit);
-	BreachType classifyTemperatureAndPressureBreach(CoolingType coolingType, double temperatureInC);
+	BreachType classifyTemperaturePressureBreach(CoolingType coolingType, double temperatureInC);
 	BreachType checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 
 };

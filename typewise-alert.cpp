@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 
-BreachType Maintenance_and_Support::inferBreach(double value, double lowerLimit, double upperLimit) {
+BreachType Maintenance::inferBreach(double value, double lowerLimit, double upperLimit) {
 	if (value < lowerLimit) {
 		return TOO_LOW;
 	}
@@ -12,14 +12,14 @@ BreachType Maintenance_and_Support::inferBreach(double value, double lowerLimit,
 	return NORMAL;
 }
 
-BreachType Maintenance_and_Support::classifyTemperatureAndPressureBreach(CoolingType coolingType, double temperatureInC) {
+BreachType Maintenance::classifyTemperaturePressureBreach(CoolingType coolingtype, double valuetocheck) {
 
-	return inferBreach(temperatureInC, check_cooling[coolingType].first, check_cooling[coolingType].second);
+	return inferBreach(valuetocheck, check_cooling[coolingtype].first, check_cooling[coolingtype].second);
 }
 
-BreachType Maintenance_and_Support::checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
+BreachType Maintenance::checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double valuetocheck) {
 
-	BreachType breachType = Maintenance_and_Support::classifyTemperatureAndPressureBreach( batteryChar.coolingType, temperatureInC);
+	BreachType breachType = Maintenance::classifyTemperaturePressureBreach( batteryChar.coolingType, valuetocheck);
 	InterfaceFor controller_notifier, email_notifier;
 	switch (alertTarget) {
 	case TO_CONTROLLER:
@@ -28,7 +28,7 @@ BreachType Maintenance_and_Support::checkAndAlert(AlertTarget alertTarget, Batte
 	case TO_EMAIL:
 		return email_notifier.sendToEmail(breachType, batteryChar.coolingType);
 		break;
-	default: std::cout<<"UNWANTED_ERROR :"<< UNWANTED_ERROR<<"\n";
+	default: std::cout<<"UNWANTED_ERROR: "<< UNWANTED_ERROR<<"\n";
 	}
 
 	return UNWANTED_ERROR;
