@@ -4,6 +4,7 @@
 #include <map>
 #include<vector>
 typedef enum {
+	None = 0,
 	PASSIVE_COOLING,
 	PASSIVE_COOLING_TEMP,
 	PASSIVE_COOLING_AIR_PRESSURE,
@@ -33,15 +34,45 @@ typedef struct {
 	char brand[48];
 } BatteryCharacter;
 
-class NotificationTo{
+class controller {
 public:
-	virtual BreachType sendToController(BreachType breachType) = 0;
-	virtual BreachType sendToEmail(BreachType breachType, CoolingType coolingType) = 0;
+	virtual void InformController() = 0;
+
+};
+class ControllerInterface :public controller {
+public:
+	 static int controllerAlert;
+	 void InformController();
+	 int controllerAlertSent();
 };
 
-class InterfaceFor :public NotificationTo {
+class Email {
 public:
-	std::map<CoolingType, std::string> m = { { PASSIVE_COOLING             ,"PASSIVE_COOLING" },
+	virtual void EmailSender() = 0;
+	
+};
+class emailInterface :public Email {
+public:
+	static  int sentEmails;
+	void EmailSender();
+	int emailSent();
+};
+
+class Notification{
+public:
+	
+	virtual BreachType sendToController(BreachType breachType) = 0;
+	virtual BreachType sendToEmail(BreachType breachType, CoolingType coolingType) = 0;
+	
+	virtual void controllerToConsole(BreachType breachType) = 0;
+	virtual void emailToConsole(BreachType breachType, CoolingType coolingType) = 0;
+};
+
+class InterfaceFor :public Notification {
+public:
+	const unsigned short header = 0xfeed;
+
+	std::map<CoolingType, std::string> cooling = { { PASSIVE_COOLING       ,"PASSIVE_COOLING" },
 											{ PASSIVE_COOLING_TEMP         ,"PASSIVE_COOLING_TEMP" },
 											{ PASSIVE_COOLING_AIR_PRESSURE ,"PASSIVE_COOLING_AIR_PRESSURE"},
 											{ HI_ACTIVE_COOLING            ,"HI_ACTIVE_COOLING" },
@@ -51,16 +82,22 @@ public:
 											{ MED_ACTIVE_COOLING_TEMP      ,"MED_ACTIVE_COOLING_TEMP" },
 											{ MED_ACTIVE_COOLING_AIR_PRESSURE,"MED_ACTIVE_COOLING_AIR_PRESSURE" }
 											};
+	std::map<BreachType, std::string> email_contain = { { TOO_HIGH , " TOO HIGH" },
+														{ TOO_LOW  , " TOO LOW" },
+														{ NORMAL   , " NORMAL" }
+														};
+	
 	BreachType sendToController(BreachType breachType);
 	BreachType sendToEmail(BreachType breachType, CoolingType coolingType);
-	std::map<BreachType, std::string> email_contain = { { TOO_HIGH , " TOO HIGH" },
-														{ TOO_LOW  , " TOO LOW"  },
-														{ NORMAL   , " NORMAL"   }
-													   };
+
+	void controllerToConsole(BreachType breachType);
+	void emailToConsole(BreachType breachType, CoolingType coolingType);
+
 };
+
 class Maintenance {
 public:
-	std::map<CoolingType, std::pair<double, double>> check_cooling = {	{ PASSIVE_COOLING              ,std::make_pair(5,35)  },
+	std::map<CoolingType, std::pair<double, double>> check_cooling = {  { PASSIVE_COOLING              ,std::make_pair(5,35)  },
 																		{ PASSIVE_COOLING_TEMP         ,std::make_pair(10,25) },
 																		{ PASSIVE_COOLING_AIR_PRESSURE ,std::make_pair(5,30)  },
 																		{ HI_ACTIVE_COOLING            ,std::make_pair(0,45)  },

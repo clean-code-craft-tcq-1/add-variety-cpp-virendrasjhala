@@ -26,6 +26,17 @@ TEST_CASE("infers the breach according to limits") {
 	BatteryCharacter mid_cooling2;
 	mid_cooling2.coolingType = MED_ACTIVE_COOLING_AIR_PRESSURE;
 	REQUIRE(MID_AC_Breach2.checkAndAlert(NO_Target, mid_cooling2, 40) == UNWANTED_ERROR);
+
+
+	/*-------------------------------------varify-----------------------------------------*/
+	//varify
+	emailInterface email_I;
+	assert(email_I.emailSent() != 0);
+
+	//varify
+	ControllerInterface Controller_I;
+	assert(Controller_I.controllerAlertSent() != 0);
+
 }
 
 	

@@ -1,6 +1,9 @@
 #include "typewise-alert.h"
 #include <stdio.h>
+#include<sstream>
 
+ int emailInterface::sentEmails=0;
+ int ControllerInterface::controllerAlert =0;
 
 BreachType Maintenance::inferBreach(double value, double lowerLimit, double upperLimit) {
 	if (value < lowerLimit) {
@@ -34,18 +37,44 @@ BreachType Maintenance::checkAndAlert(AlertTarget alertTarget, BatteryCharacter 
 	return UNWANTED_ERROR;
 }
 
-BreachType InterfaceFor::sendToController(BreachType breachType) {
-	const unsigned short header = 0xfeed;
-	printf("%x : %x\n", header, breachType);
+int emailInterface::emailSent()
+{
+	return sentEmails++;
+}
+void emailInterface::EmailSender() {
+	const char* recepient = "a.b@c.com";
+	printf("To: %s\n", recepient);
+	std::cout << "Hi" << "\n";
 
+	emailSent();
+}
+int ControllerInterface::controllerAlertSent() {
+
+	return controllerAlert++;
+}
+void ControllerInterface::InformController() {
+	controllerAlertSent();
+}
+
+void InterfaceFor::controllerToConsole(BreachType breachType) {
+	
+	std::cout <<std::hex<<header <<":"<< email_contain[breachType].data()<<"\n\n";
+}
+void InterfaceFor::emailToConsole(BreachType breachType, CoolingType coolingType) {
+
+	std::cout << cooling[coolingType].data() << ":" << email_contain[breachType].data() << "\n\n";
+}   
+
+BreachType InterfaceFor::sendToController(BreachType breachType) {
+	ControllerInterface Controller_I;
+	Controller_I.InformController();
+	controllerToConsole(breachType);
 	return breachType;
 }
 
 BreachType InterfaceFor::sendToEmail(BreachType breachType, CoolingType coolingType) {
-	const char* recepient = "a.b@c.com";
-	printf("To: %s\n", recepient);
-	std::cout<<"Hi"<<"\n";
-	std::cout << m[coolingType].data()<<":"<<email_contain[breachType].data() << "\n\n";
-
+	emailInterface Email_I;
+	Email_I.EmailSender();
+	emailToConsole(breachType, coolingType);
 	return breachType;
 }
